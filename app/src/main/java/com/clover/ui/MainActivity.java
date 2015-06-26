@@ -18,20 +18,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.clover.R;
-import com.clover.ui.frgms.GamePage;
-import com.clover.ui.frgms.MainPage;
 import com.clover.ui.frgms.UserPage;
+import com.clover.ui.frgms.MainPage;
+import com.clover.ui.frgms.GamePage;
 
 import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity {
-    private ViewPager mPager;//ҳ������
-    private ArrayList<Fragment> fragments; // Tabҳ���б�
-    private ImageView cursor;// ����ͼƬ
-    private TextView t1, t2, t3;// ҳ��ͷ��
-    private int offset = 0;// ����ͼƬƫ����
-    private int currIndex = 0;// ��ǰҳ�����
-    private int bmpW;// ����ͼƬ���
+    private ViewPager mPager;//页卡内容
+    private ArrayList<Fragment> fragments; // Tab页面列表
+    private ImageView cursor;// 动画图片
+    private TextView t1, t2, t3;// 页卡头标
+    private int offset = 0;// 动画图片偏移量
+    private int currIndex = 0;// 当前页卡编号
+    private int bmpW;// 动画图片宽度
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * ��ʼ��ViewPager
+     * 初始化ViewPager
      */
     private void InitViewPager() {
         mPager = (ViewPager) findViewById(R.id.vPager);
@@ -63,7 +63,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * ��ʼ��ͷ��
+     * 初始化头标
      */
     private void InitTextView() {
         t1 = (TextView) findViewById(R.id.text1);
@@ -76,7 +76,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * ͷ��������
+     * 头标点击监听
      */
     public class MyOnClickListener implements View.OnClickListener {
         private int index = 0;
@@ -92,7 +92,7 @@ public class MainActivity extends FragmentActivity {
     };
 
     /**
-     * ViewPager������
+     * ViewPager适配器
      */
     public class MyPagerAdapter extends FragmentPagerAdapter {
         ArrayList<Fragment> list;
@@ -117,28 +117,28 @@ public class MainActivity extends FragmentActivity {
     }
 
     /**
-     * ��ʼ������
+     * 初始化动画
      */
     private void InitImageView() {
         cursor = (ImageView) findViewById(R.id.cursor);
         bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.a)
-                .getWidth();// ��ȡͼƬ���
+                .getWidth();// 获取图片宽度
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int screenW = dm.widthPixels;// ��ȡ�ֱ��ʿ��
-        offset = (screenW / 3 - bmpW) / 2;// ����ƫ����
+        int screenW = dm.widthPixels;// 获取分辨率宽度
+        offset = (screenW / 3 - bmpW) / 2;// 计算偏移量
         Matrix matrix = new Matrix();
         matrix.postTranslate(offset, 0);
-        cursor.setImageMatrix(matrix);// ���ö�����ʼλ��
+        cursor.setImageMatrix(matrix);// 设置动画初始位置
     }
 
     /**
-     * ҳ���л�����
+     * 页卡切换监听
      */
     public class MyOnPageChangeListener implements OnPageChangeListener {
 
-        int one = offset * 2 + bmpW;// ҳ��1 -> ҳ��2 ƫ����
-        int two = one * 2;// ҳ��1 -> ҳ��3 ƫ����
+        int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
+        int two = one * 2;// 页卡1 -> 页卡3 偏移量
 
         @Override
         public void onPageSelected(int arg0) {
@@ -167,7 +167,7 @@ public class MainActivity extends FragmentActivity {
                     break;
             }
             currIndex = arg0;
-            animation.setFillAfter(true);// True:ͼƬͣ�ڶ�������λ��
+            animation.setFillAfter(true);// True:图片停在动画结束位置
             animation.setDuration(300);
             cursor.startAnimation(animation);
         }
