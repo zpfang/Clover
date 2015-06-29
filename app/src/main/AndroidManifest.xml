@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.clover" >
 
-    <!-- BmobPush SDK权限 -->
-    <permission
-        android:name="cn.bmob.permission.push"
-        android:protectionLevel="normal" />
-
     <uses-permission android:name="cn.bmob.permission.push" /> <!-- 添加自定义的权限 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,17 +16,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.AnniversaryActivity"
@@ -40,10 +30,6 @@
         <activity
             android:name=".ui.HealthActivity"
             android:label="@string/title_activity_health" >
-        </activity>
-        <activity
-            android:name=".ui.DiseaseActivity"
-            android:label="@string/title_activity_disease" >
         </activity>
 
         <service
@@ -69,43 +55,52 @@
         </receiver>
 
         <!-- 第四部中创建的消息接收器，在这里进行注册 -->
-        <receiver android:name=".utils.MyPushMessageReceiver" >
+        <receiver android:name=".net.MyPushMessageReceiver" >
             <intent-filter>
                 <action android:name="cn.bmob.push.action.MESSAGE" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name=".LoverManagerActivity"
+            android:name="ui.LoverManagerActivity"
             android:label="@string/title_activity_lover_manager" >
         </activity>
         <activity
-            android:name=".UserInfoUpdateActivity"
+            android:name="ui.UserInfoUpdateActivity"
             android:label="@string/title_activity_user_info_update" >
         </activity>
         <activity
-            android:name=".ChatActivity"
+            android:name="ui.ChatActivity"
             android:label="@string/title_activity_chat" >
         </activity>
         <activity
-            android:name=".TTTAActivity"
+            android:name="ui.TTTAActivity"
             android:label="@string/title_activity_ttta" >
         </activity>
         <activity
-            android:name=".TZFEActivity"
+            android:name="ui.TZFEActivity"
             android:label="@string/title_activity_tzfe" >
         </activity>
         <activity
-            android:name=".SpaceActivity"
+            android:name="ui.SpaceActivity"
             android:label="@string/title_activity_space" >
         </activity>
         <activity
             android:name=".ui.LoginActivity"
             android:label="@string/title_activity_login" >
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.RegisterActivity"
             android:label="@string/title_activity_register" >
+        </activity>
+        <activity
+            android:name=".ui.EditUserInfoActivity"
+            android:label="@string/title_activity_edit_user_info" >
         </activity>
     </application>
 

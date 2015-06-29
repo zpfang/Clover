@@ -20,13 +20,14 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:text="Anniversary"
-            android:onClick="btnAnniversary"/>
+            android:onClick="onMainClick"/>
         <Button
+            android:id="@+id/health"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginLeft="40dp"
             android:text="Health"
-            android:onClick="btnHealth"/>
+            android:onClick="onMainClick"/>
         </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"

@@ -35,8 +35,6 @@ public class HealthActivity extends ActionBarActivity {
                 case R.id.health1:
                     break;
                 case R.id.disease:
-                    Intent intent = new Intent(HealthActivity.this, DiseaseActivity.class);
-                    startActivity(intent);
                     break;
             }
         }

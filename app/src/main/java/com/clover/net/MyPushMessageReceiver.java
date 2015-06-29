@@ -10,8 +10,6 @@ import android.util.Log;
 
 import com.clover.R;
 
-import cn.bmob.push.PushConstants;
-
 /**
  * Created by dan on 2015/6/26.
  */
@@ -21,7 +19,7 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
         // 获取推送消息
-        String message = intent.getStringExtra(PushConstants.EXTRA_PUSH_MESSAGE_STRING);
+        String message = intent.getStringExtra("msg");
         Log.i("BmobClient", "收到的推送消息："+message);
         // 发送通知
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

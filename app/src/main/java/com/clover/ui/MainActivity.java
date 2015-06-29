@@ -1,6 +1,5 @@
 package com.clover.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -28,11 +27,6 @@ import com.clover.ui.frgms.GamePage;
 
 import java.util.ArrayList;
 
-import cn.bmob.push.BmobPush;
-import cn.bmob.push.*;
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobInstallation;
-
 public class MainActivity extends FragmentActivity {
     private ViewPager mPager;//页卡内容
     private ArrayList<Fragment> fragments; // Tab页面列表
@@ -56,13 +50,6 @@ public class MainActivity extends FragmentActivity {
         btn_Anniversary = (Button)findViewById(R.id.anniversary);
         //btn_Anniversary.setOnClickListener(new ButtonOnClickListener());
 
-        // 初始化BmobSDK
-        Bmob.initialize(this, "85e40757e81851d007990f3e103ec5ae");
-        // 使用推送服务时的初始化操作
-        BmobInstallation.getCurrentInstallation(this).save();
-        // 启动推送服务
-        BmobPush.startWork(this, "85e40757e81851d007990f3e103ec5ae");
-
     }
 
     /**
@@ -71,16 +58,15 @@ public class MainActivity extends FragmentActivity {
     private void InitViewPager() {
         mPager = (ViewPager) findViewById(R.id.vPager);
         fragments = new ArrayList<Fragment>();
-        Fragment fragment1 = new UserPage();
-        Fragment fragment2 = new MainPage();
-        Fragment fragment3 = new GamePage();
+        Fragment fragment1 = new MainPage();
+        Fragment fragment2 = new GamePage();
+        Fragment fragment3 = new UserPage();
         fragments.add(fragment1);
         fragments.add(fragment2);
         fragments.add(fragment3);
         mPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragments));
         mPager.setCurrentItem(0);
         mPager.setOnPageChangeListener(new MyOnPageChangeListener());
-        //mPager.addOnPageChangeListener(new MyOnPageChangeListener());
     }
 
     /**
@@ -202,36 +188,45 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+
     /**
-     * 按钮点击事件
-     * 点击不响应
+     * 主页面函数
+     * Anniversary打开纪念日界面
+     * Health打开健康界面
      */
-    class ButtonOnClickListener implements View.OnClickListener{
-        public void onClick(View v){
-            Intent intent;
-            switch (v.getId()){
-                case R.id.anniversary:
-                    intent = new Intent(MainActivity.this, AnniversaryActivity.class);
-                    startActivity(intent);
-                    break;
-            }
+    public void onMainClick(View view){
+        Intent intent;
+        switch (view.getId()){
+            case R.id.anniversary:
+                intent = new Intent(this,AnniversaryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.health:
+                intent = new Intent(this,HealthActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
     /**
-     * 点击按钮打开纪念日界面
+     * 个人资料页面点击函数
+     * EditUserInfo打开编辑个人资料的页面
+     * MyLover打开添加情侣的界面
+     * Setting打开设置界面
+     * Quit退出当前账号
      */
-    public void btnAnniversary(View view){
-        Intent i = new Intent(MainActivity.this, AnniversaryActivity.class);
-        startActivity(i);
+    public void onUserClick(View view){
+        Intent intent;
+        switch (view.getId()){
+            case R.id.editUserInfo:
+                intent = new Intent(this, EditUserInfoActivity.class);
+                break;
+            case R.id.mylover:
+                break;
+            case R.id.setting:
+                break;
+            case R.id.quit:
+                break;
+        }
     }
-
-    /**
-     * 点击按钮打开健康界面
-     */
-    public void btnHealth(View view){
-        Intent i = new Intent(MainActivity.this, HealthActivity.class);
-        startActivity(i);
-    }
-
 }

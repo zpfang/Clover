@@ -8,6 +8,11 @@
     <string name="TimeUntilNow">我们已经相爱</string>
     <string name="Days">天</string>
     <string name="anniversary">纪念日</string>
+    <string name="age">岁</string>
+    <string name="editUserInfo">编辑资料</string>
+    <string name="mylover">我的情侣</string>
+    <string name="setting">设置</string>
+    <string name="quit">退出</string>
 
     <string name="title_activity_anniversary">AnniversaryActivity</string>
     <string name="title_activity_health">HealthActivity</string>
@@ -20,4 +25,5 @@
     <string name="title_activity_space">SpaceActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_edit_user_info">EditUserInfoActivity</string>
 </resources>
