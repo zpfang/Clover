@@ -1,0 +1,8 @@
+user: objectId(int),nick(string)£¬avatar(string),username(string),password(string),age(int),sex(bool)
+relationship: objectId(int), user1(user), user2(user), anniversary(date)
+state: objectId(int),state1(int)?,state2..?
+mood: objectId(int), createtime(time), contenttext(string), contentimg(string), point<user>(user)  
+alarm: objectId(int), description(string), user(user), time(time), type(int)?
+message: objectId(int), sender(user), time(time), content(string)
+emm: objectId(int), lastDate(date), interval(int)
+game: objectId(int), name(string), mode(int)

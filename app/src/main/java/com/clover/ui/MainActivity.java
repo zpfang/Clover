@@ -1,5 +1,7 @@
 package com.clover.ui;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -10,10 +12,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +28,11 @@ import com.clover.ui.frgms.GamePage;
 
 import java.util.ArrayList;
 
+import cn.bmob.push.BmobPush;
+import cn.bmob.push.*;
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
+
 public class MainActivity extends FragmentActivity {
     private ViewPager mPager;//页卡内容
     private ArrayList<Fragment> fragments; // Tab页面列表
@@ -32,6 +41,8 @@ public class MainActivity extends FragmentActivity {
     private int offset = 0;// 动画图片偏移量
     private int currIndex = 0;// 当前页卡编号
     private int bmpW;// 动画图片宽度
+    private Button btn_Anniversary;//纪念日按钮
+    private LayoutInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +52,16 @@ public class MainActivity extends FragmentActivity {
         InitTextView();
         InitImageView();
         InitViewPager();
+
+        btn_Anniversary = (Button)findViewById(R.id.anniversary);
+        //btn_Anniversary.setOnClickListener(new ButtonOnClickListener());
+
+        // 初始化BmobSDK
+        Bmob.initialize(this, "85e40757e81851d007990f3e103ec5ae");
+        // 使用推送服务时的初始化操作
+        BmobInstallation.getCurrentInstallation(this).save();
+        // 启动推送服务
+        BmobPush.startWork(this, "85e40757e81851d007990f3e103ec5ae");
 
     }
 
@@ -180,4 +201,37 @@ public class MainActivity extends FragmentActivity {
         public void onPageScrollStateChanged(int arg0) {
         }
     }
+
+    /**
+     * 按钮点击事件
+     * 点击不响应
+     */
+    class ButtonOnClickListener implements View.OnClickListener{
+        public void onClick(View v){
+            Intent intent;
+            switch (v.getId()){
+                case R.id.anniversary:
+                    intent = new Intent(MainActivity.this, AnniversaryActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * 点击按钮打开纪念日界面
+     */
+    public void btnAnniversary(View view){
+        Intent i = new Intent(MainActivity.this, AnniversaryActivity.class);
+        startActivity(i);
+    }
+
+    /**
+     * 点击按钮打开健康界面
+     */
+    public void btnHealth(View view){
+        Intent i = new Intent(MainActivity.this, HealthActivity.class);
+        startActivity(i);
+    }
+
 }

@@ -3,4 +3,21 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+
+    <string name="TimeUntilNow">我们已经相爱</string>
+    <string name="Days">天</string>
+    <string name="anniversary">纪念日</string>
+
+    <string name="title_activity_anniversary">AnniversaryActivity</string>
+    <string name="title_activity_health">HealthActivity</string>
+    <string name="title_activity_disease">DiseaseActivity</string>
+    <string name="title_activity_lover_manager">LoverManagerActivity</string>
+    <string name="title_activity_user_info_update">UserInfoUpdateActivity</string>
+    <string name="title_activity_chat">ChatActivity</string>
+    <string name="title_activity_ttta">TTTAActivity</string>
+    <string name="title_activity_tzfe">TZFEActivity</string>
+    <string name="title_activity_space">SpaceActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
 </resources>
