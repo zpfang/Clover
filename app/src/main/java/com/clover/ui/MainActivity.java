@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -21,13 +20,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.clover.R;
-import com.clover.ui.frgms.UserPage;
-import com.clover.ui.frgms.MainPage;
 import com.clover.ui.frgms.GamePage;
+import com.clover.ui.frgms.MainPage;
+import com.clover.ui.frgms.UserPage;
 
 import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends BaseActivity {
     private ViewPager mPager;//页卡内容
     private ArrayList<Fragment> fragments; // Tab页面列表
     private ImageView cursor;// 动画图片
@@ -40,12 +39,19 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        if(userManager.getCurrentUser() == null){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         InitTextView();
         InitImageView();
         InitViewPager();
+
 
         btn_Anniversary = (Button)findViewById(R.id.anniversary);
         //btn_Anniversary.setOnClickListener(new ButtonOnClickListener());

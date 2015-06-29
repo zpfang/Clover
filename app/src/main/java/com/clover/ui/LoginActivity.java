@@ -10,9 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.clover.entities.User;
-
 import com.clover.R;
+import com.clover.entities.User;
 
 import cn.bmob.v3.listener.SaveListener;
 
