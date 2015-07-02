@@ -12,6 +12,7 @@ public class SharePreferenceUtils {
     private static SharedPreferences.Editor editor;
 
     private  String SHARED_KEY_LOGIN = "shared_key_login";
+    private  String SHARED_KEY_Relationship = "shared_key_relation";
 
     public  SharePreferenceUtils(Context context) {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -26,4 +27,6 @@ public class SharePreferenceUtils {
     public  void setBooleanLogin(boolean islogin) {
         editor.putBoolean(SHARED_KEY_LOGIN, islogin);
     }
+
+
 }

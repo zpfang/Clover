@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
 
     <application
+        android:name=".utils.CloverApplication"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
@@ -75,10 +76,6 @@
             android:label="@string/title_activity_user_info_update" >
         </activity>
         <activity
-            android:name="ui.ChatActivity"
-            android:label="@string/title_activity_chat" >
-        </activity>
-        <activity
             android:name="ui.TTTAActivity"
             android:label="@string/title_activity_ttta" >
         </activity>
@@ -93,6 +90,7 @@
         <activity
             android:name=".ui.LoginActivity"
             android:label="@string/title_activity_login" >
+
         </activity>
         <activity
             android:name=".ui.RegisterActivity"
@@ -101,6 +99,11 @@
         <activity
             android:name=".ui.EditUserInfoActivity"
             android:label="@string/title_activity_edit_user_info" >
+        </activity>
+        <activity
+            android:name=".ui.ChatActivity"
+            android:label="@string/title_activity_chat" >
+
         </activity>
     </application>
 

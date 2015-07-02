@@ -26,4 +26,5 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_edit_user_info">EditUserInfoActivity</string>
+    <string name="title_activity_chat2">Chat2Activity</string>
 </resources>

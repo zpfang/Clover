@@ -20,11 +20,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.clover.R;
+import com.clover.entities.Relationship;
+import com.clover.entities.User;
 import com.clover.ui.frgms.GamePage;
 import com.clover.ui.frgms.MainPage;
 import com.clover.ui.frgms.UserPage;
+import com.clover.utils.CloverApplication;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import cn.bmob.im.BmobChatManager;
+import cn.bmob.im.bean.BmobChatUser;
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 public class MainActivity extends BaseActivity {
     private ViewPager mPager;//页卡内容
@@ -36,25 +46,61 @@ public class MainActivity extends BaseActivity {
     private int bmpW;// 动画图片宽度
     private Button btn_Anniversary;//纪念日按钮
     private LayoutInflater inflater;
-
+    private TextView tv_chat;
+    private CloverApplication application;
+    User woman;
+    User man;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        Bmob.initialize(this, APPID);
         if(userManager.getCurrentUser() == null){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
+        }else{
+            application = (CloverApplication)getApplication();
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            setContentView(R.layout.activity_main);
+
+            chatManager = BmobChatManager.getInstance(this);
+            InitTextView();
+            InitImageView();
+            InitViewPager();
+
+
+            btn_Anniversary = (Button)findViewById(R.id.anniversary);
+            //btn_Anniversary.setOnClickListener(new ButtonOnClickListener());
+
+            initApplication();
         }
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
-        InitTextView();
-        InitImageView();
-        InitViewPager();
 
 
-        btn_Anniversary = (Button)findViewById(R.id.anniversary);
-        //btn_Anniversary.setOnClickListener(new ButtonOnClickListener());
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+
+        /*BmobQuery<Relationship> query = new BmobQuery<Relationship>();
+        query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ONLY );
+        query.findObjects(this, new FindListener<Relationship>() {
+            @Override
+            public void onSuccess(List<Relationship> list) {
+                application.setRelationship(list.get(0));
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
+            }
+        });
+*/
+
 
     }
 
@@ -73,6 +119,7 @@ public class MainActivity extends BaseActivity {
         mPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(), fragments));
         mPager.setCurrentItem(0);
         mPager.setOnPageChangeListener(new MyOnPageChangeListener());
+
     }
 
     /**
@@ -82,10 +129,24 @@ public class MainActivity extends BaseActivity {
         t1 = (TextView) findViewById(R.id.text1);
         t2 = (TextView) findViewById(R.id.text2);
         t3 = (TextView) findViewById(R.id.text3);
+        tv_chat = (TextView) findViewById(R.id.chart_bar);
 
         t1.setOnClickListener(new MyOnClickListener(0));
         t2.setOnClickListener(new MyOnClickListener(1));
         t3.setOnClickListener(new MyOnClickListener(2));
+        tv_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(application.getRelationship() != null){
+                    Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                    startActivity(intent);
+                }else{
+                    initApplication();
+                }
+
+            }
+        });
+
     }
 
     /**
@@ -235,4 +296,38 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
+    private void initApplication(){
+        man = new User();
+        man = BmobChatUser.getCurrentUser(this, User.class);
+        BmobQuery<User> query = new BmobQuery<>();
+        query.setCachePolicy(BmobQuery.CachePolicy.CACHE_THEN_NETWORK);
+        query.addWhereEqualTo("username","11");
+        query.findObjects(this, new FindListener<User>() {
+            @Override
+            public void onSuccess(List<User> list) {
+                woman = new User();
+                if(list.size()<=0){
+                   return;
+                }
+                woman = list.get(0);
+                Relationship relationship = new Relationship();
+                relationship.setW_user(woman);
+                relationship.setM_user(man);
+                if (woman != null) {
+                    application.setRelationship(relationship);
+                }
+                ShowLog("获取application对象成功");
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                ShowToast("获取application对象失败");
+                ShowLog("获取application对象失败");
+                application.setRelationship(null);
+            }
+        });
+
+    }
+
+
 }

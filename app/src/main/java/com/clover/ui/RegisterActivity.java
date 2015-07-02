@@ -8,14 +8,16 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.clover.R;
+import com.clover.entities.Relationship;
 import com.clover.entities.User;
 
 import java.util.List;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -29,11 +31,14 @@ public class RegisterActivity extends BaseActivity {
     private String username;
     private String password;
     private String pwdAgain;
+    private RadioButton radioButton0;
+    private RadioButton radioButton1;
+    private RadioGroup radioGroup;
+    private User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bmob.initialize(this, APPID);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_register);
 
@@ -46,16 +51,30 @@ public class RegisterActivity extends BaseActivity {
                 registe();
             }
         });
+
         et_account.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
                     checkUsername();
                 }
 
             }
         });
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == radioButton0.getId()){
+                    user.setSex(false);//男
+                }
+                if(checkedId == radioButton1.getId()){
+                    user.setSex(true);//女
+                }
+            }
+        });
+        radioButton0.setChecked(true);
 
     }
 
@@ -64,6 +83,9 @@ public class RegisterActivity extends BaseActivity {
         et_password = (EditText) findViewById(R.id.et_password);
         et_pwdAgain = (EditText) findViewById(R.id.et_pwd_again);
         bt_register = (Button) findViewById(R.id.btn_register);
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        radioButton0 = (RadioButton) findViewById(R.id.radioGroupButton0);
+        radioButton1 = (RadioButton) findViewById(R.id.radioGroupButton1);
     }
 
     private void registe(){
@@ -88,7 +110,7 @@ public class RegisterActivity extends BaseActivity {
         dialog.setCancelable(false);
         dialog.show();
         ShowLog("dialog......");
-        User user = new User();
+
         user.setUsername(username);
         user.setPassword(password);
         ShowLog("signup......");
@@ -98,6 +120,8 @@ public class RegisterActivity extends BaseActivity {
             public void onSuccess() {
                 ShowToast("注册成功");
                 dialog.dismiss();
+                BmobQuery<Relationship> query = new BmobQuery<Relationship>();
+                //query.addWhereEndsWith("")
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();

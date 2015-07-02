@@ -23,6 +23,7 @@ public class LoginActivity  extends BaseActivity {
     private EditText et_password;
     private Button bt_login;
     private TextView register;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ public class LoginActivity  extends BaseActivity {
         dialog.setMessage("正在登录");
         dialog.setCancelable(false);
         dialog.show();
-        User user = new User();
+        user= new User();
         user.setUsername(username);
         user.setPassword(password);
         userManager.login(user, new SaveListener() {
